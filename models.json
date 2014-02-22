@@ -1,0 +1,78 @@
+{
+  "email": {
+    "options": {
+      "base": "Email"
+    },
+    "dataSource": "mail",
+    "public": false
+  },
+  "user": {
+    "options": {
+      "base": "User",
+      "relations": {
+        "accessTokens": {
+          "model": "accessToken",
+          "type": "hasMany",
+          "foreignKey": "userId"
+        }
+      }
+    },
+    "dataSource": "db",
+    "public": true
+  },
+  "accessToken": {
+    "options": {
+      "base": "AccessToken"
+    },
+    "dataSource": "db",
+    "public": true
+  },
+  "device": {
+    "properties": {
+      "id": {
+        "type": "string"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "devices"
+  },
+  "beacon": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "lat": {
+        "type": "number"
+      },
+      "long": {
+        "type": "number"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "beacons"
+  },
+  "beaconMeasurement": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "distance": {
+        "type": "number"
+      },
+      "beaconId": {
+        "type": "string"
+      },
+      "deviceId": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "number"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "beaconMeasurements"
+  }
+}
