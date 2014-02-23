@@ -53,19 +53,16 @@
     "dataSource": "db",
     "plural": "beacons"
   },
-  "beaconMeasurement": {
+  "deviceLocation": {
     "properties": {
       "id": {
         "type": "string"
       },
-      "distance": {
+      "longitude": {
         "type": "number"
       },
-      "beaconId": {
-        "type": "string"
-      },
-      "deviceId": {
-        "type": "string"
+      "latatitude": {
+        "type": "number"
       },
       "timestamp": {
         "type": "number"
@@ -73,6 +70,17 @@
     },
     "public": true,
     "dataSource": "db",
-    "plural": "beaconMeasurements"
+    "plural": "deviceLocations"
+  },
+  "helpRequest": {
+      "direction": {
+       "type": "number"
+      },
+      "distance": {
+       "type": "number"
+      },
+      "public": true,
+      "dataSource": "db",
+      "plural": "helpRequests"
   }
 }
