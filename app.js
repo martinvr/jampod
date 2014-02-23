@@ -1,7 +1,7 @@
 var loopback = require('loopback');
 var path = require('path');
-var started = new Date();
 var app = module.exports = loopback()
+var maps = require('./maps');
 
 // operational dependencies
 try {
@@ -115,23 +115,7 @@ app.use(loopback.errorHandler());
  */
 
 app.get('/', loopback.status());
-app.get('/map', function(req, res) {
-    var gm = require('googlemaps');
-    var util = require('util');
-    
-   var markers = [
-        { 'location': '52.307300, 4.842240', 'label':'1', 'color':'blue' },
-        { 'location': '52.307394, 4.842181',  'label': '2', 'color':'blue'},
-        { 'location': '52.307406, 4.842349',  'label': '3', 'color':'blue'},
-        { 'location': '52.307377, 4.842271',  'label': 'M'}
-    ]
-
-    var staticMap = gm.staticMap('52.307270, 4.842359', 20, '1024x786', false, false, 'roadmap', markers, null, null);
-    util.puts(staticMap);
-    
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('<img src="'+staticMap+'" />');
-});
+app.get('/map', function(req,res){maps.show(req,res)});
 
 /*
  * 6. Optionally start the server
