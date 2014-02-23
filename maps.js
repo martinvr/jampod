@@ -28,12 +28,11 @@ function show(req, res) {
                 var beacon = beacons[i];
                 markers += '{ "location": "'+beacon.lat+', '+beacon.long+'", "label":"'+beacon.id+'", "color":"blue" }';
                 
-                //if (beacons.length != i + 1) {
+                //if (beacons.length != i + 1 || devicesAvailable) {
                    markers += ',';
-                //}
             }
+            //TODO get devices from api
             markers +='{"location": "52.307377, 4.842271", "label": "M"}]';
-            console.log(markers);
             
             var staticMap = gm.staticMap('52.307270, 4.842359', 20, '1024x786', false, false, 'roadmap', JSON.parse(markers), null, null);
             util.puts(staticMap);
