@@ -5,7 +5,8 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "loopback": "1.3.x"
+    "loopback": "1.3.x",
+    "strong-cluster-control": "~0.1.0"
   },
   "optionalDependencies": {
     "strong-cluster-control": "~0.1.0",
