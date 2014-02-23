@@ -1,7 +1,8 @@
 var loopback = require('loopback');
 var path = require('path');
-var app = module.exports = loopback();
 var started = new Date();
+var express = require("express");
+var app = express();
 
 // operational dependencies
 try {
@@ -24,7 +25,7 @@ if(clusterOptions.clustered && clusterOptions.isMaster) {
  * Read more at http://apidocs.strongloop.com/loopback#appbootoptions
  */
 
-app.boot(__dirname);
+//app.boot(__dirname);
 
 /*
  * 2. Configure request preprocessing
@@ -139,7 +140,7 @@ app.get('/map', function(req, res) {
  * (only if this module is the main module)
  */
 if(require.main === module) {
-  require('http').createServer(app).listen(process.env.PORT, process.env.IP,
+  app.listen(process.env.PORT, process.env.IP,
     function(){
       var baseUrl = 'http://' + process.env.IP + ':' + process.env.PORT;
       if (explorerPath) {
