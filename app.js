@@ -122,10 +122,18 @@ app.get('/', loopback.status());
  * (only if this module is the main module)
  */
 
+// Set up the HTTP listener ip & port
+var ip = process.env.IP || '0.0.0.0'
+var port = process.env.PORT || 3000;
+var baseUrl = 'https://' + process.env.C9_PROJECT + '-c9-' + process.env.C9_USER + '.c9.io';
+app.set('ip', ip);
+app.set('port', port);
+
 if(require.main === module) {
-  require('http').createServer(app).listen(app.get('port'), app.get('host'),
+  require('http').createServer(app).listen(app.get('port'), app.get('ip'),
     function(){
-      var baseUrl = 'http://' + app.get('host') + ':' + app.get('port');
+        
+    //   var baseUrl = 'http://' + app.get('host') + ':' + app.get('port');
       if (explorerPath) {
         console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
       } else {
