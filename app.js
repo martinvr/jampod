@@ -1,8 +1,7 @@
 var loopback = require('loopback');
 var path = require('path');
 var started = new Date();
-var express = require("express");
-var app = express();
+var app = module.exports = loopback()
 
 // operational dependencies
 try {
@@ -25,7 +24,7 @@ if(clusterOptions.clustered && clusterOptions.isMaster) {
  * Read more at http://apidocs.strongloop.com/loopback#appbootoptions
  */
 
-//app.boot(__dirname);
+app.boot(__dirname);
 
 /*
  * 2. Configure request preprocessing
