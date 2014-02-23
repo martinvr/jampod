@@ -115,17 +115,33 @@ app.use(loopback.errorHandler());
  */
 
 app.get('/', loopback.status());
+app.get('/map', function(req, res) {
+    var gm = require('googlemaps');
+    var util = require('util');
+    
+   var markers = [
+        { 'location': '52.307300, 4.842240', 'label':'1', 'color':'blue' },
+        { 'location': '52.307394, 4.842181',  'label': '2', 'color':'blue'},
+        { 'location': '52.307406, 4.842349',  'label': '3', 'color':'blue'},
+        { 'location': '52.307377, 4.842271',  'label': 'M'}
+    ]
+
+    var staticMap = gm.staticMap('52.307270, 4.842359', 20, '1024x786', false, false, 'roadmap', markers, null, null);
+    util.puts(staticMap);
+    
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end('<img src="'+staticMap+'" />');
+});
 
 /*
  * 6. Optionally start the server
  *
  * (only if this module is the main module)
  */
-
 if(require.main === module) {
-  require('http').createServer(app).listen(app.get('port'), app.get('host'),
+  require('http').createServer(app).listen(process.env.PORT, process.env.IP,
     function(){
-      var baseUrl = 'http://' + app.get('host') + ':' + app.get('port');
+      var baseUrl = 'http://' + process.env.IP + ':' + process.env.PORT;
       if (explorerPath) {
         console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
       } else {
