@@ -29,7 +29,7 @@
   },
   "device": {
     "properties": {
-      "id": {
+      "type": {
         "type": "string"
       }
     },
@@ -39,9 +39,6 @@
   },
   "beacon": {
     "properties": {
-      "id": {
-        "type": "string"
-      },
       "lat": {
         "type": "number"
       },
@@ -55,7 +52,7 @@
   },
   "deviceLocation": {
     "properties": {
-      "id": {
+      "deviceId": {
         "type": "string"
       },
       "longitude": {
