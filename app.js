@@ -1,8 +1,17 @@
 var loopback = require('loopback');
 var path = require('path');
 var app = module.exports = loopback()
+var server = require('http').createServer(app)
 var maps = require('./maps');
 var requestController = require('./controllers/requestController')
+var io = require('socket.io').listen(server)
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 // operational dependencies
 try {

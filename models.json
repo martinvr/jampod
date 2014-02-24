@@ -53,7 +53,9 @@
   "deviceLocation": {
     "properties": {
       "deviceId": {
-        "type": "string"
+        "type": "string",
+        "required" : true,
+        "id" : true
       },
       "longitude": {
         "type": "number"
