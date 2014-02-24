@@ -2,6 +2,7 @@ var loopback = require('loopback');
 var path = require('path');
 var app = module.exports = loopback()
 var maps = require('./maps');
+var requestController = require('./controllers/requestController')
 
 // operational dependencies
 try {
@@ -80,6 +81,7 @@ try {
 // express routes.
 app.use(app.router);
 
+
 // The static file server should come after all other routes
 // Every request that goes through the static middleware hits
 // the file system to check if a file exists.
@@ -113,9 +115,9 @@ app.use(loopback.errorHandler());
  *
  * (remove this to handle `/` on your own)
  */
-
 app.get('/', loopback.status());
 app.get('/map', function(req,res){maps.show(req,res)});
+app.get('/latestHelpRequest', function(req, res){requestController.getLatestRequest(req, res)});
 
 /*
  * 6. Optionally start the server

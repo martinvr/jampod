@@ -72,15 +72,15 @@
     "dataSource": "db",
     "plural": "deviceLocations"
   },
-  "helpRequest": {
-      "direction": {
-       "type": "number"
-      },
-      "distance": {
-       "type": "number"
-      },
-      "public": true,
-      "dataSource": "db",
-      "plural": "helpRequests"
+  "jampodClient": {
+    "clientId": {
+      "type":"string"
+    },
+    "deviceID": {
+      "type":"string"  
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "jampodClients"
   }
 }
