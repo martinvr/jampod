@@ -133,9 +133,9 @@ app.get('/activeHelpRequests', function(req, res){requestController.activeHelpRe
  * (only if this module is the main module)
  */
 if(require.main === module) {
-  app.listen(app.get('port'), app.get('host'),
+  app.listen(process.env.PORT, process.env.IP,
     function(){
-      var baseUrl = 'http://' + app.get('host') + ':' + app.get('port');
+      var baseUrl = 'http://' + process.env.IP + ':' + process.env.PORT;
       if (explorerPath) {
         console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
       } else {
