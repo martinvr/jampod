@@ -65,6 +65,9 @@
       },
       "timestamp": {
         "type": "number"
+      },
+      "active": {
+          "type": "boolean"
       }
     },
     "public": true,
