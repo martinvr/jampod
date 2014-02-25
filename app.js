@@ -118,7 +118,6 @@ app.use(loopback.urlNotFound());
 // The ultimate error handler.
 app.use(loopback.errorHandler());
 
-
 /*
  * 5. Add a basic application status route at the root `/`.
  *
@@ -126,7 +125,7 @@ app.use(loopback.errorHandler());
  */
 app.get('/', loopback.status());
 app.get('/map', function(req,res){maps.show(req,res)});
-app.get('/latestHelpRequest', function(req, res){requestController.getLatestRequest(req, res)});
+app.get('/activeHelpRequests', function(req, res){requestController.activeHelpRequests(req, res)});
 
 /*
  * 6. Optionally start the server

@@ -13,7 +13,7 @@ exports.show = show;
 
 function show(req, res) {
     var beaconOptions = getOptions(beacons_path);
-    var markers = '[';
+    var markers = new Array();
 
     var request = http.request(beaconOptions, function(resp) {
         resp.setEncoding('utf8');
@@ -24,7 +24,7 @@ function show(req, res) {
         });
       
         resp.on('end', function () {
-            markers += beacons(str);
+            markers = markers.concat(beacons(str));
             
             var deviceOptions = getOptions(devices_path);
             var request = http.request(deviceOptions, function(resp) {
@@ -36,8 +36,7 @@ function show(req, res) {
                 });
               
                 resp.on('end', function () {
-                    markers += devices(str);
-                    markers += ']';
+                    markers = markers.concat(devices(str));
                     writeResponse(res, markers);
                 });
             });
@@ -51,23 +50,25 @@ function show(req, res) {
 }
 
 function writeResponse(res, markers) {
-    var staticMap = gm.staticMap('52.307270, 4.842359', 20, '1024x786', false, false, 'roadmap', JSON.parse(markers), null, null);
+    if (markers.length <= 0) {
+        markers = [];
+    }
+
+    var staticMap = gm.staticMap('52.307270, 4.842359', 20, '1024x786', false, false, 'roadmap', markers, null, null);
     util.puts(staticMap);
-            
+  
     res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('<img src="'+staticMap+'" />');
+    res.end('<img src="'+staticMap+'&key=AIzaSyDP2B5EholQ63uaLQRRiAe7s2OCKo36n_A" />');
 }
 
 var beacons = function(str) {
     var beacons = str ? JSON.parse(str) : [];
-    var markers = '';
+    var markers = new Array();
     
     for(var i = 0; i < beacons.length; i++) {
         var beacon = beacons[i];
-        markers += '{ "location": "'+beacon.lat+', '+beacon.long+'", "label":"'+beacon.id+'", "color":"blue" }';
-        
-        //if (beacons.length != i + 1 || devicesAvailable) {
-        markers += ',';
+        var location = beacon.lat + ', ' + beacon.long;
+        markers[i] = {"location":location, "label":beacon.id, "color":"blue"};
     }
 
     return markers;
@@ -75,17 +76,14 @@ var beacons = function(str) {
 
 var devices = function(str) {
     var devices = str ? JSON.parse(str) : [];
-    var markers = '';
+    var markers = new Array();
     
     for(var i = 0; i < devices.length; i++) {
         var device = devices[i];
-        markers += '{ "location": "'+device.lat+', '+device.long+'", "label":"'+device.deviceId+'", "color":"blue" }';
-        
-        if ((i + 1) < devices.length) {
-            markers += ',';
-        }
+        var location = device.lat + ', ' + device.long;
+        markers[i] = {"location":location, "label":device.deviceId, "color":"blue"};
     }
-    
+
     return markers;
 }
 
