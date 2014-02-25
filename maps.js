@@ -24,7 +24,7 @@ function show(req, res) {
         });
       
         resp.on('end', function () {
-            markers = markers.concat(beacons(str));
+            markers = markers.concat(markers(str, "blue"));
             
             var deviceOptions = getOptions(devices_path);
             var request = http.request(deviceOptions, function(resp) {
@@ -36,7 +36,7 @@ function show(req, res) {
                 });
               
                 resp.on('end', function () {
-                    markers = markers.concat(devices(str));
+                    markers = markers.concat(markers(str, "red"));
                     writeResponse(res, markers);
                 });
             });
@@ -61,27 +61,14 @@ function writeResponse(res, markers) {
     res.end('<img src="'+staticMap+'&key=AIzaSyDP2B5EholQ63uaLQRRiAe7s2OCKo36n_A" />');
 }
 
-var beacons = function(str) {
-    var beacons = str ? JSON.parse(str) : [];
+var markers = function(str, color) {
+    var json = str ? JSON.parse(str) : [];
     var markers = new Array();
     
-    for(var i = 0; i < beacons.length; i++) {
-        var beacon = beacons[i];
-        var location = beacon.lat + ', ' + beacon.long;
-        markers[i] = {"location":location, "label":beacon.id, "color":"blue"};
-    }
-
-    return markers;
-}
-
-var devices = function(str) {
-    var devices = str ? JSON.parse(str) : [];
-    var markers = new Array();
-    
-    for(var i = 0; i < devices.length; i++) {
-        var device = devices[i];
-        var location = device.lat + ', ' + device.long;
-        markers[i] = {"location":location, "label":device.deviceId, "color":"blue"};
+    for(var i = 0; i < json.length; i++) {
+        var marker = json[i];
+        var location = marker.lat + ', ' + marker.long;
+        markers[i] = {"location":location, "label":marker.deviceId, "color":color};
     }
 
     return markers;
