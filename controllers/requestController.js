@@ -27,10 +27,13 @@ function activeHelpRequests(req, res) {
 
         for (var i = 0; i < deviceLocations.length; i++) {
             var device = deviceLocations[i];
-            var customer = new latlon.LatLon(device.lat, device.long);                                                  
-            var distance = myDevice.distanceTo(customer); // in km                                         
-            var bearing = myDevice.bearingTo(customer);
-            response[i] = {"distance": distance, "bearing":bearing, "device":device.id};            
+            
+            if (device.active) {
+                var customer = new latlon.LatLon(device.lat, device.long);                                                  
+                var distance = myDevice.distanceTo(customer); // in km                                         
+                var bearing = myDevice.bearingTo(customer);
+                response[i] = {"distance": distance, "bearing":bearing, "device":device.id};            
+            }
         }
 
         res.end(JSON.stringify(response));
