@@ -23,7 +23,8 @@ function show(req, res) {
         });
       
         resp.on('end', function () {
-            markers = markers.concat(markers(str, "blue"));
+            var beacons = getMarkers(str, "blue");
+            markers = markers.concat(beacons);
             
             var deviceOptions = getOptions(devices_path);
             var request = http.request(deviceOptions, function(resp) {
@@ -35,7 +36,7 @@ function show(req, res) {
                 });
               
                 resp.on('end', function () {
-                    markers = markers.concat(markers(str, "red"));
+                    markers = markers.concat(getMarkers(str, "red"));
                     writeResponse(res, markers);
                 });
             });
@@ -60,7 +61,7 @@ function writeResponse(res, markers) {
     res.end('<img src="'+staticMap+'&key=AIzaSyDP2B5EholQ63uaLQRRiAe7s2OCKo36n_A" />');
 }
 
-var markers = function(str, color) {
+function getMarkers(str, color) {
     var json = str ? JSON.parse(str) : [];
     var markers = new Array();
     
