@@ -57,10 +57,10 @@
         "required" : true,
         "id" : true
       },
-      "longitude": {
+      "long": {
         "type": "number"
       },
-      "latatitude": {
+      "lat": {
         "type": "number"
       },
       "timestamp": {

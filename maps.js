@@ -3,7 +3,6 @@ var gm = require('googlemaps');
 var util = require('util');
 var io = require('socket.io');
 
-
 var url = 'jampod-c9-martinvr.c9.io';
 var beacons_path = '/api/beacons';
 var devices_path = '/api/deviceLocations';
