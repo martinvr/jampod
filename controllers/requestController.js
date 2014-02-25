@@ -13,25 +13,26 @@ exports.activeHelpRequests = activeHelpRequests;
 
     
 function activeHelpRequests(req, res) {
-    var p1 = new latlon.LatLon(52.3073, 4.84224);                                                  
-    var p2 = new latlon.LatLon(52.307394, 4.842181);                                                  
-    var dist = p1.distanceTo(p2);          // in km                                         
-    var brng = p1.bearingTo(p2);
+    var myDevice = new latlon.LatLon(52.3073, 4.84224);
         
     var DeviceLocation = ds.define('deviceLocation', {
         deviceId: String,
+        id: String,
         lat: Number,
         long: Number
     });
-        
-    DeviceLocation.all(function (err, deviceLocations) {
-        console.log(deviceLocations);
-    });
     
-    var response = new Array();
-    response[0] = {"distance":dist, "bearing":brng};
-    response[1] = {"distance":dist, "bearing":brng};
+    DeviceLocation.all(function (err, deviceLocations) {
+        var response = new Array();
 
+        for (var i = 0; i < deviceLocations.length; i++) {
+            var device = deviceLocations[i];
+            var customer = new latlon.LatLon(device.lat, device.long);                                                  
+            var distance = myDevice.distanceTo(customer); // in km                                         
+            var bearing = myDevice.bearingTo(customer);
+            response[i] = {"distance": distance, "bearing":bearing, "device":device.id};            
+        }
 
-    res.end(JSON.stringify(response));
+        res.end(JSON.stringify(response));
+    });
 }
