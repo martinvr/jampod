@@ -2,7 +2,7 @@
   "db": {
     "defaultForType": "db",
     "connector": "loopback-connector-mongodb",
-        "host": "localhost",
+        "host": "95.85.49.119",
         "port": 27017,
         "username": "jampod",
         "password": "pswpsw123",
