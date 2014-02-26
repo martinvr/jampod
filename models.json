@@ -39,6 +39,11 @@
   },
   "beacon": {
     "properties": {
+      "name": {
+        "type": "string",
+        "required" : true,
+        "id" : true
+      },
       "lat": {
         "type": "number"
       },
