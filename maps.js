@@ -67,7 +67,7 @@ function getMarkers(str, color) {
     
     for(var i = 0; i < json.length; i++) {
         var marker = json[i];
-        var location = marker.lat + ', ' + marker.long;
+        var location = marker.lat + ', ' + marker.lon;
         markers[i] = {"location":location, "label":marker.deviceId, "color":color};
     }
 

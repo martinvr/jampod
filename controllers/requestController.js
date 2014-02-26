@@ -19,7 +19,7 @@ function activeHelpRequests(req, res) {
         deviceId: String,
         id: String,
         lat: Number,
-        long: Number
+        lon: Number
     });
     
     DeviceLocation.all(function (err, deviceLocations) {
@@ -29,7 +29,7 @@ function activeHelpRequests(req, res) {
             var device = deviceLocations[i];
             
             if (device.active) {
-                var customer = new latlon.LatLon(device.lat, device.long);                                                  
+                var customer = new latlon.LatLon(device.lat, device.lon);                                                  
                 var distance = myDevice.distanceTo(customer); // in km                                         
                 var bearing = myDevice.bearingTo(customer);
                 response[i] = {"distance": distance, "bearing":bearing, "device":device.id};            

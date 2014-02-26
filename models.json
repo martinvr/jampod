@@ -47,7 +47,7 @@
       "lat": {
         "type": "number"
       },
-      "long": {
+      "lon": {
         "type": "number"
       }
     },
@@ -62,10 +62,10 @@
         "required" : true,
         "id" : true
       },
-      "long": {
+      "lat": {
         "type": "number"
       },
-      "lat": {
+      "lon": {
         "type": "number"
       },
       "timestamp": {
