@@ -71,7 +71,10 @@
       "timestamp": {
         "type": "number"
       },
-      "active": {
+	"myGlass" : {
+		"type" : "boolean"
+},
+      "valid": {
           "type": "boolean"
       }
     },
