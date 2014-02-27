@@ -62,6 +62,8 @@ function writeResponse(res, markers) {
 }
 
 function getMarkers(str, color) {
+    console.log(color);
+    console.log(str);
     var json = str ? JSON.parse(str) : [];
     var markers = new Array();
     

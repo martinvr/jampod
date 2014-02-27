@@ -2,7 +2,7 @@ var latlon = require('./latlon')
 var DataSource = require('loopback-datasource-juggler').DataSource;
 var ds = new DataSource({
     connector: require('loopback-connector-mongodb'),
-    host: 'localhost',
+    host: '95.85.49.119',
     port: 27017,
     username: 'jampod',
     password: 'pswpsw123',
@@ -18,6 +18,7 @@ function activeHelpRequests(req, res) {
     var DeviceLocation = ds.define('deviceLocation', {
         deviceId: String,
         id: String,
+        valid: Boolean,
         lat: Number,
         lon: Number
     });
@@ -28,7 +29,7 @@ function activeHelpRequests(req, res) {
         for (var i = 0; i < deviceLocations.length; i++) {
             var device = deviceLocations[i];
             
-            if (device.active) {
+            if (device.valid) {
                 var customer = new latlon.LatLon(device.lat, device.lon);                                                  
                 var distance = myDevice.distanceTo(customer); // in km                                         
                 var bearing = myDevice.bearingTo(customer);
@@ -36,6 +37,8 @@ function activeHelpRequests(req, res) {
             }
         }
 
-        res.end(JSON.stringify(response));
+        var help = new Object();
+        help.requests = response;
+        res.end(JSON.stringify(help));
     });
 }
