@@ -27,14 +27,22 @@ function activeHelpRequests(req, res) {
     DeviceLocation.all(function (err, deviceLocations) {
         var response = new Array();
 
+	for (var i = 0; i < deviceLocations.length; i++) {
+		var device = deviceLocations[i];
+		if (device && device.myGlass) {
+			myDevice = new latlon.LatLon(device.lat, device.lon);
+		}
+	}
+	var loc = 0;
         for (var i = 0; i < deviceLocations.length; i++) {
             var device = deviceLocations[i];
             
-            if (device && device.valid) {
+            if (device && device.valid && !device.myGlass) {
                 var customer = new latlon.LatLon(device.lat, device.lon);                                                  
                 var distance = myDevice.distanceTo(customer); // in km                                         
                 var bearing = myDevice.bearingTo(customer);
-                response[i] = {"distance": distance, "bearing":bearing, "device":device.id, "myGlass":device.myGlass};            
+                response[loc] = {"distance": distance, "bearing":bearing, "device":device.id, "myGlass":device.myGlass};            
+		loc++;
             }
         }
 
