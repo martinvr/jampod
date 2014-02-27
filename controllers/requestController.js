@@ -2,7 +2,7 @@ var latlon = require('./latlon')
 var DataSource = require('loopback-datasource-juggler').DataSource;
 var ds = new DataSource({
     connector: require('loopback-connector-mongodb'),
-    host: 'localhost',
+    host: '95.85.49.119',
     port: 27017,
     username: 'jampod',
     password: 'pswpsw123',
@@ -18,6 +18,7 @@ function activeHelpRequests(req, res) {
     var DeviceLocation = ds.define('deviceLocation', {
         deviceId: String,
         id: String,
+        myGlass: Boolean,
         valid: Boolean,
         lat: Number,
         lon: Number
@@ -25,7 +26,14 @@ function activeHelpRequests(req, res) {
     
     DeviceLocation.all(function (err, deviceLocations) {
         var response = new Array();
-
+        for (var i = 0; i < deviceLocations.length; i++) {
+            if (device.valid) {
+                var customer = new latlon.LatLon(device.lat, device.lon);                                                  
+                var distance = myDevice.distanceTo(customer); // in km                                         
+                var bearing = myDevice.bearingTo(customer);
+                response[i] = {"distance": distance, "bearing":bearing, "device":device.id};
+            }
+        }
         for (var i = 0; i < deviceLocations.length; i++) {
             var device = deviceLocations[i];
             
@@ -33,7 +41,7 @@ function activeHelpRequests(req, res) {
                 var customer = new latlon.LatLon(device.lat, device.lon);                                                  
                 var distance = myDevice.distanceTo(customer); // in km                                         
                 var bearing = myDevice.bearingTo(customer);
-                response[i] = {"distance": distance, "bearing":bearing, "device":device.id};            
+                response[i] = {"distance": distance, "bearing":bearing, "device":device.id, "myGlass":device.myGlass};            
             }
         }
 
