@@ -62,18 +62,21 @@ function writeResponse(res, markers) {
 }
 
 function getMarkers(str, color) {
-    console.log(color);
-    console.log(str);
     var json = str ? JSON.parse(str) : [];
     var markers = new Array();
     
     for(var i = 0; i < json.length; i++) {
         var marker = json[i];
         var location = marker.lat + ', ' + marker.lon;
-	if ('true' === marker.myGlass) {
-		color = 'yellow';
-	}	
-        markers[i] = {"location":location, "label":marker.deviceId, "color":color};
+        var isTrueSet = (marker.myGlass === true)
+        console.log('marker.myGlass: ' + isTrueSet);
+        var newColor = color;
+
+    	if (isTrueSet === true) {
+    		newColor = 'yellow';
+    	}
+
+        markers[i] = {"location":location, "label":marker.deviceId, "color":newColor};
     }
 
     return markers;
