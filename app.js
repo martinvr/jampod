@@ -13,21 +13,6 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-// operational dependencies
-try {
-  require('strong-agent').profile();
-  var control = require('strong-cluster-control');
-  var clusterOptions = control.loadOptions();
-} catch(e) {
-  console.log('Could not load operational dependencies:');
-  console.log(e);
-}
-
-// if configured as a cluster master, just start controller
-if(clusterOptions.clustered && clusterOptions.isMaster) {
-  return control.start(clusterOptions);
-}
-
 /*
  * 1. Configure LoopBack models and datasources
  *
@@ -133,9 +118,9 @@ app.get('/activeHelpRequests', function(req, res){requestController.activeHelpRe
  * (only if this module is the main module)
  */
 if(require.main === module) {
-  app.listen('80', '95.85.49.119',
+  app.listen('80', '127.0.0.1',
     function(){
-      var baseUrl = 'http://95.85.49.119/';
+      var baseUrl = 'http://127.0.0.1/';
       if (explorerPath) {
         console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
       } else {
