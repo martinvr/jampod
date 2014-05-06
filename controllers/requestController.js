@@ -2,8 +2,8 @@ var latlon = require('./latlon')
 var DataSource = require('loopback-datasource-juggler').DataSource;
 var ds = new DataSource({
     connector: require('loopback-connector-mongodb'),
-    host: '95.85.49.119',
-    port: 27017,
+    host: 'oceanic.mongohq.com',
+    port: 10048,
     username: 'jampod',
     password: 'pswpsw123',
     database: 'jampod'
